@@ -1,33 +1,34 @@
 import css from "./Contact.module.css";
-import { BsFillPersonFill } from "react-icons/bs";
-import { BsTelephoneFill } from "react-icons/bs";
+import { LuCat } from "react-icons/lu";
+import { LuPhone } from "react-icons/lu";
 import { useDispatch } from "react-redux";
-import { deleteContact } from "../../redux/contactsOps";
+import { deleteContact } from "../../redux/contacts/operations";
 
-export default function Contact({ contact: { name, number, id } }) {
+export default function Contact({ contactId, name, number }) {
   const dispatch = useDispatch();
-  return (
-    <div className={css.container}>
-      <div>
-        <p>
-          <BsFillPersonFill className={css.icon} />
-          {name}
-        </p>
+  const handleDelete = () => dispatch(deleteContact(contactId));
 
-        <p>
-          <BsTelephoneFill className={css.icon} />
-          {number}
-        </p>
+  return (
+    <div className={css.contactCardContainer}>
+      <ul className={css.contactDataListElement}>
+        <li className={css.contactDataItemElement}>
+          <div className={css.contactDataIcon}>
+            <LuCat />
+          </div>
+          <div className={css.contactDataText}>{name}</div>
+        </li>
+        <li className={css.contactDataItemElement}>
+          <div className={css.contactDataIcon}>
+            <LuPhone />
+          </div>
+          <div className={css.contactDataText}>{number}</div>
+        </li>
+      </ul>
+      <div className={css.contactDeleteButtonContainer}>
+        <button className={css.buttonDelete} onClick={handleDelete}>
+          Delete
+        </button>
       </div>
-      <button
-        type="button"
-        className={css.button}
-        onClick={() => {
-          dispatch(deleteContact(id));
-        }}
-      >
-        Delete
-      </button>
     </div>
   );
 }
